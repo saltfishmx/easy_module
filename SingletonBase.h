@@ -4,31 +4,31 @@
 template<typename T>
 class SingletonBase{
 public:
-	// É¾³ı¿½±´¹¹Ôìº¯ÊıºÍ¸³Öµ²Ù×÷·û£¬È·±£µ¥Àı
+    // åˆ é™¤æ‹·è´æ„é€ å‡½æ•°å’Œèµ‹å€¼æ“ä½œç¬¦ï¼Œç¡®ä¿å•ä¾‹
     SingletonBase(const SingletonBase&) = delete;
     SingletonBase& operator=(const SingletonBase&) = delete;
-    // Ìá¹©Ò»¸ö¾²Ì¬·½·¨ÓÃÓÚ»ñÈ¡µ¥Àı¶ÔÏóµÄÒıÓÃ
+    // æä¾›ä¸€ä¸ªé™æ€æ–¹æ³•ç”¨äºè·å–å•ä¾‹å¯¹è±¡çš„å¼•ç”¨
     static T& instance() {
-        std::call_once(initInstanceFlag, &SingletonBase::initSingleton);//¿ÉÒÔ±£Ö¤Ö»µ÷ÓÃÒ»´Î
+        std::call_once(initInstanceFlag, &SingletonBase::initSingleton);//å¯ä»¥ä¿è¯åªè°ƒç”¨ä¸€æ¬¡
         assert(singletonInstance != nullptr);
         return *singletonInstance;
     }
 protected:
-    // Ä¬ÈÏ¹¹Ôìº¯ÊıÎªprotected£¬È·±£Íâ²¿²»ÄÜÖ±½ÓÊµÀı»¯
+    // é»˜è®¤æ„é€ å‡½æ•°ä¸ºprotectedï¼Œç¡®ä¿å¤–éƒ¨ä¸èƒ½ç›´æ¥å®ä¾‹åŒ–
     SingletonBase() {}
 
-    // ĞéÎö¹¹º¯ÊıÒÔÖ§³ÖÅÉÉúÀà
+    // è™šææ„å‡½æ•°ä»¥æ”¯æŒæ´¾ç”Ÿç±»
     virtual ~SingletonBase() {}
 
 private:
-    // ¾²Ì¬·½·¨ÓÃÓÚ³õÊ¼»¯µ¥Àı¶ÔÏó
+    // é™æ€æ–¹æ³•ç”¨äºåˆå§‹åŒ–å•ä¾‹å¯¹è±¡
     static void initSingleton() {
         singletonInstance = new T();
     }
 
-    // Ö¸Ïòµ¥Àı¶ÔÏóµÄ¾²Ì¬Ö¸Õë
+    // æŒ‡å‘å•ä¾‹å¯¹è±¡çš„é™æ€æŒ‡é’ˆ
     inline static T* singletonInstance = nullptr;
 
-    // ÓÃÓÚÈ·±£Ïß³Ì°²È«µÄÒ»´ÎĞÔ³õÊ¼»¯±êÖ¾
+    // ç”¨äºç¡®ä¿çº¿ç¨‹å®‰å…¨çš„ä¸€æ¬¡æ€§åˆå§‹åŒ–æ ‡å¿—
     inline static std::once_flag initInstanceFlag;
 };
